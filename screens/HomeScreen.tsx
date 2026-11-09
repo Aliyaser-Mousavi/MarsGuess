@@ -1321,7 +1321,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   featureTile: {
-    width: "48.5%",
+    flex: 1,
+    flexBasis: "47%",
+    minWidth: 140,
     borderRadius: Radius.md,
     overflow: "hidden",
     borderWidth: 1,

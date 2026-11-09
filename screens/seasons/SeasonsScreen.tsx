@@ -502,6 +502,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 210, 180, 0.08)",
   },
   tierLeft: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     gap: 12,

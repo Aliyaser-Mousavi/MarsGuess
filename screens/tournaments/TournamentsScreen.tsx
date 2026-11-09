@@ -346,10 +346,13 @@ const styles = StyleSheet.create({
   },
   specsRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 10,
   },
   specBox: {
     flex: 1,
+    flexBasis: "45%",
+    minWidth: 120,
     backgroundColor: "rgba(255,255,255,0.05)",
     paddingVertical: 10,
     borderRadius: Radius.md,
@@ -425,10 +428,13 @@ const styles = StyleSheet.create({
   },
   rewardsRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 8,
   },
   rewardPill: {
     flex: 1,
+    flexBasis: "28%",
+    minWidth: 80,
     backgroundColor: "rgba(255,255,255,0.04)",
     paddingVertical: 8,
     borderRadius: Radius.md,

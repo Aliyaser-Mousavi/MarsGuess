@@ -24,6 +24,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   ActivityIndicator,
   FlatList,
+  Pressable,
   RefreshControl,
   StyleSheet,
   Text,
@@ -160,22 +161,22 @@ export default function LeaderboardScreen({ onBack }: Props) {
       <SafeAreaView style={styles.safe}>
         {/* Header */}
         <View style={styles.header}>
-          <PrimaryButton
-            variant="ghost"
-            size="sm"
+          <Pressable
+            style={({ pressed }) => [styles.backBtn, pressed && styles.pressed]}
             onPress={() => {
               buzz("light");
               playSound("button_click");
               onBack();
             }}
-            icon={<Ionicons name="arrow-back" size={20} color={Colors.text} />}
+            accessibilityRole="button"
+            accessibilityLabel="Back to menu"
           >
-            Back
-          </PrimaryButton>
+            <Ionicons name="chevron-back" size={22} color={Colors.text} />
+          </Pressable>
           <View style={styles.titleWrap}>
             <Title size="sm">Leaderboard</Title>
           </View>
-          <View style={{ width: 60 }} />
+          <View style={styles.headerSpacer} />
         </View>
 
         {/* Sub-header info */}
@@ -250,7 +251,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingVertical: 10,
+  },
+  backBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: Radius.sm,
+    backgroundColor: Colors.bgElevated,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: Colors.border,
+  },
+  pressed: {
+    opacity: 0.75,
+  },
+  headerSpacer: {
+    width: 40,
   },
   titleWrap: {
     alignItems: "center",

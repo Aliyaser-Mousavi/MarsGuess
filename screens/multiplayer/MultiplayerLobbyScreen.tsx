@@ -23,6 +23,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -408,10 +410,16 @@ export default function MultiplayerLobbyScreen({ onBack, onStartMatch }: Props) 
           <View style={styles.headerSpacer} />
         </View>
 
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
         >
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
           {/* Top Mode Pill Tabs (Ranked vs Private) */}
           {!inPrivateLobby && !isSearching && (
             <View style={styles.tabContainer}>
@@ -774,6 +782,7 @@ export default function MultiplayerLobbyScreen({ onBack, onStartMatch }: Props) 
             </View>
           )}
         </ScrollView>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </ScreenBackground>
   );
@@ -873,10 +882,13 @@ const styles = StyleSheet.create({
   },
   difficultyGrid: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 8,
   },
   diffCard: {
     flex: 1,
+    flexBasis: "30%",
+    minWidth: 96,
     backgroundColor: Colors.surface,
     padding: 12,
     borderRadius: Radius.md,
@@ -1110,14 +1122,15 @@ const styles = StyleSheet.create({
   codeInputField: {
     backgroundColor: Colors.bgElevated,
     borderRadius: Radius.md,
-    height: 50,
-    borderWidth: 1,
-    borderColor: Colors.borderStrong,
+    height: 52,
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
     fontFamily: FontFamily.display,
-    fontSize: 20,
+    fontSize: 22,
     color: Colors.text,
     letterSpacing: 4,
     textAlign: "center",
+    paddingHorizontal: 16,
   },
 
   /* Head-to-Head Arena */

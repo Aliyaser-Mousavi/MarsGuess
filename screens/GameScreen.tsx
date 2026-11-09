@@ -162,6 +162,7 @@ export default function GameScreen({
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonContainer}>
           <PrimaryButton
+            fullWidth={false}
             variant="secondary"
             onPress={() => nextGuessHandler("lower")}
             icon={<Ionicons name="arrow-down" size={20} color={Colors.coral} />}
@@ -171,6 +172,7 @@ export default function GameScreen({
         </View>
         <View style={styles.buttonContainer}>
           <PrimaryButton
+            fullWidth={false}
             variant="primary"
             onPress={() => nextGuessHandler("greater")}
             icon={<Ionicons name="arrow-up" size={20} color={Colors.bg} />}
@@ -230,6 +232,7 @@ export default function GameScreen({
               <View style={styles.wideRow}>
                 <View style={styles.buttonContainer}>
                   <PrimaryButton
+                    fullWidth={false}
                     variant="secondary"
                     onPress={() => nextGuessHandler("lower")}
                     icon={<Ionicons name="arrow-down" size={20} color={Colors.coral} />}
@@ -242,6 +245,7 @@ export default function GameScreen({
                 </NumberContainer>
                 <View style={styles.buttonContainer}>
                   <PrimaryButton
+                    fullWidth={false}
                     variant="primary"
                     onPress={() => nextGuessHandler("greater")}
                     icon={<Ionicons name="arrow-up" size={20} color={Colors.bg} />}

@@ -193,6 +193,7 @@ export default function StartGameScreen({
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
         >
           <ScrollView
             contentContainerStyle={styles.content}
@@ -946,8 +947,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   diffCard: {
-    width: "48%",
-    flexGrow: 1,
+    flex: 1,
+    flexBasis: "47%",
+    minWidth: 140,
     backgroundColor: Colors.surface,
     borderRadius: Radius.md,
     padding: 12,
@@ -1022,15 +1024,18 @@ const styles = StyleSheet.create({
   },
   numberInput: {
     alignSelf: "center",
-    height: 64,
-    minWidth: 130,
-    fontSize: 40,
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.accent,
+    height: 56,
+    minWidth: 140,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.accent,
     color: Colors.accent,
     marginVertical: 8,
     fontFamily: FontFamily.display,
+    fontSize: 32,
     textAlign: "center",
+    paddingHorizontal: 16,
     fontVariant: ["tabular-nums"],
   },
   pillsRow: {
@@ -1071,14 +1076,15 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: Colors.bgElevated,
-    borderRadius: Radius.sm,
-    paddingHorizontal: 12,
-    paddingVertical: 9,
+    borderRadius: Radius.md,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    minHeight: 46,
     color: Colors.text,
     fontFamily: FontFamily.body,
     fontSize: 14,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    borderWidth: 1.5,
+    borderColor: Colors.borderStrong,
   },
   rankedToggleCard: {
     flexDirection: "row",

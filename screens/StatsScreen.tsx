@@ -507,6 +507,7 @@ export default function StatsScreen({ onBack, onPlayArchivedDaily }: Props) {
                   </Text>
                 </View>
                 <PrimaryButton
+                  fullWidth={false}
                   variant="accent"
                   size="sm"
                   onPress={() => setShowDailyArchive(true)}

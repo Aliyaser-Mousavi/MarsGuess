@@ -23,6 +23,7 @@ type Props = {
   loading?: boolean;
   style?: StyleProp<ViewStyle>;
   icon?: React.ReactNode;
+  fullWidth?: boolean;
 };
 
 const VARIANT_CONFIG: Record<
@@ -62,6 +63,7 @@ export default function PrimaryButton({
   loading,
   style,
   icon,
+  fullWidth = true,
 }: Props) {
   const { buzz } = useGame();
   const config = VARIANT_CONFIG[variant];
@@ -87,6 +89,7 @@ export default function PrimaryButton({
       }}
       style={({ pressed }) => [
         styles.base,
+        fullWidth ? styles.fullWidth : styles.shrinkWidth,
         sizeStyle,
         {
           backgroundColor: config.bg,
@@ -117,23 +120,30 @@ const styles = StyleSheet.create({
     borderRadius: Radius.md,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 5,
+  },
+  fullWidth: {
     width: "100%",
+    marginVertical: 5,
+  },
+  shrinkWidth: {
+    width: "100%",
+    flexShrink: 1,
+    marginVertical: 0,
   },
   sizeSm: {
-    minHeight: 44,
+    minHeight: 42,
     paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingVertical: 9,
   },
   sizeMd: {
-    minHeight: 52,
+    minHeight: 48,
     paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingVertical: 12,
   },
   sizeLg: {
-    minHeight: 58,
+    minHeight: 54,
     paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingVertical: 14,
   },
   contentRow: {
     flexDirection: "row",

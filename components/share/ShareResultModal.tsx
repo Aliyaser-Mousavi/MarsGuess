@@ -272,7 +272,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   metricItem: {
-    width: "48%",
+    flex: 1,
+    flexBasis: "47%",
+    minWidth: 100,
   },
   metricLbl: {
     fontFamily: FontFamily.mono,

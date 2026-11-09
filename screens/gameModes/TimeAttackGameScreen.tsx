@@ -22,6 +22,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -262,152 +264,158 @@ export default function TimeAttackGameScreen({
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safe}>
-        <View style={styles.screen}>
-          {/* Top HUD with Pause Button */}
-          <View style={styles.hud}>
-            <Pressable
-              onPress={() => {
-                buzz("light");
-                playSound("button_click");
-                setIsPaused(true);
-              }}
-              style={({ pressed }) => [
-                styles.pauseBtn,
-                pressed && { opacity: 0.7 },
-              ]}
-              accessibilityRole="button"
-              accessibilityLabel="Pause Game"
-            >
-              <Ionicons name="pause" size={16} color={Colors.text} />
-            </Pressable>
-
-            {/* Countdown Badge */}
-            <View
-              style={[
-                styles.timerBadge,
-                isUrgent && styles.timerBadgeUrgent,
-              ]}
-            >
-              <Ionicons
-                name="timer"
-                size={18}
-                color={isUrgent ? Colors.coral : "#00E5FF"}
-              />
-              <Text
-                style={[
-                  styles.timerText,
-                  isUrgent && { color: Colors.coral },
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        >
+          <View style={styles.screen}>
+            {/* Top HUD with Pause Button */}
+            <View style={styles.hud}>
+              <Pressable
+                onPress={() => {
+                  buzz("light");
+                  playSound("button_click");
+                  setIsPaused(true);
+                }}
+                style={({ pressed }) => [
+                  styles.pauseBtn,
+                  pressed && { opacity: 0.7 },
                 ]}
+                accessibilityRole="button"
+                accessibilityLabel="Pause Game"
               >
-                {timeLeft}s
-              </Text>
-            </View>
+                <Ionicons name="pause" size={16} color={Colors.text} />
+              </Pressable>
 
-            <View style={styles.hudChip}>
-              <Text style={styles.hudLabel}>ATTEMPTS</Text>
-              <Text style={styles.hudValue}>{history.length}</Text>
-            </View>
-          </View>
-
-          {/* Heading */}
-          <View style={styles.headerArea}>
-            <Title size="md">Time Attack</Title>
-            <SameText muted style={styles.rangeSub}>
-              Find the number before the clock hits zero! ({difficulty.min}–{difficulty.max})
-            </SameText>
-          </View>
-
-          {/* Centerpiece Number Display */}
-          <NumberContainer label="CURRENT GUESS">
-            {guess ? guess : "?"}
-          </NumberContainer>
-
-          {/* Proximity Feedback Pill */}
-          <ProximityIndicator
-            feedback={lastProximity}
-            visible={settings.showProximity}
-          />
-
-          {/* Range Bar */}
-          <RangeBar
-            min={difficulty.min}
-            max={difficulty.max}
-            low={low}
-            high={high + 1}
-          />
-
-          {/* Input & Guess Controls Card */}
-          <Card variant="elevated" style={styles.inputCard}>
-            <TextInput
-              style={styles.input}
-              keyboardType="number-pad"
-              maxLength={String(difficulty.max).length}
-              value={guess}
-              onChangeText={setGuess}
-              placeholder="Enter number"
-              placeholderTextColor={Colors.textDim}
-              selectionColor="#00E5FF"
-              editable={!isEnded && !isPaused}
-            />
-            <View style={styles.actionsRow}>
-              <View style={{ flex: 1.6 }}>
-                <PrimaryButton
-                  variant="accent"
-                  onPress={submitGuess}
-                  disabled={isEnded || isPaused}
-                  icon={<Ionicons name="send" size={17} color={Colors.bg} />}
+              {/* Countdown Badge */}
+              <View
+                style={[styles.timerBadge, isUrgent && styles.timerBadgeUrgent]}
+              >
+                <Ionicons
+                  name="timer"
+                  size={18}
+                  color={isUrgent ? Colors.coral : "#00E5FF"}
+                />
+                <Text
+                  style={[
+                    styles.timerText,
+                    isUrgent && { color: Colors.coral },
+                  ]}
                 >
-                  Submit Guess
-                </PrimaryButton>
+                  {timeLeft}s
+                </Text>
               </View>
-              {hintsLeft > 0 && (
-                <View style={{ flex: 1 }}>
+
+              <View style={styles.hudChip}>
+                <Text style={styles.hudLabel}>ATTEMPTS</Text>
+                <Text style={styles.hudValue}>{history.length}</Text>
+              </View>
+            </View>
+
+            {/* Heading */}
+            <View style={styles.headerArea}>
+              <Title size="md">Time Attack</Title>
+              <SameText muted style={styles.rangeSub}>
+                Find the number before the clock hits zero! ({difficulty.min}–
+                {difficulty.max})
+              </SameText>
+            </View>
+
+            {/* Centerpiece Number Display */}
+            <NumberContainer label="CURRENT GUESS">
+              {guess ? guess : "?"}
+            </NumberContainer>
+
+            {/* Proximity Feedback Pill */}
+            <ProximityIndicator
+              feedback={lastProximity}
+              visible={settings.showProximity}
+            />
+
+            {/* Range Bar */}
+            <RangeBar
+              min={difficulty.min}
+              max={difficulty.max}
+              low={low}
+              high={high + 1}
+            />
+
+            {/* Input & Guess Controls Card */}
+            <Card variant="elevated" style={styles.inputCard}>
+              <TextInput
+                style={styles.input}
+                keyboardType="number-pad"
+                maxLength={String(difficulty.max).length}
+                value={guess}
+                onChangeText={setGuess}
+                placeholder="Enter number"
+                placeholderTextColor={Colors.textDim}
+                selectionColor="#00E5FF"
+                editable={!isEnded && !isPaused}
+              />
+              <View style={styles.actionsRow}>
+                <View style={{ flex: 1.6 }}>
                   <PrimaryButton
-                    variant="ghost"
-                    onPress={() => {
-                      buzz("light");
-                      playSound("button_click");
-                      setHintModalVisible(true);
-                    }}
+                    fullWidth={false}
+                    variant="accent"
+                    onPress={submitGuess}
                     disabled={isEnded || isPaused}
-                    icon={
-                      <Ionicons
-                        name="bulb-outline"
-                        size={16}
-                        color={Colors.accent}
-                      />
-                    }
+                    icon={<Ionicons name="send" size={17} color={Colors.bg} />}
                   >
-                    Hints ({hintsLeft})
+                    Submit Guess
                   </PrimaryButton>
                 </View>
-              )}
-            </View>
-          </Card>
+                {hintsLeft > 0 && (
+                  <View style={{ flex: 1 }}>
+                    <PrimaryButton
+                      fullWidth={false}
+                      variant="ghost"
+                      onPress={() => {
+                        buzz("light");
+                        playSound("button_click");
+                        setHintModalVisible(true);
+                      }}
+                      disabled={isEnded || isPaused}
+                      icon={
+                        <Ionicons
+                          name="bulb-outline"
+                          size={16}
+                          color={Colors.accent}
+                        />
+                      }
+                    >
+                      Hints ({hintsLeft})
+                    </PrimaryButton>
+                  </View>
+                )}
+              </View>
+            </Card>
 
-          {/* Guess Log History */}
-          <View style={styles.listContainer}>
-            <Text style={styles.historyHeader}>GUESS LOG</Text>
-            <FlatList
-              data={history}
-              keyExtractor={(item, i) => `${item.value}-${i}`}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item, index }) => (
-                <GuessLogItem
-                  roundNumber={history.length - index}
-                  guess={item.value}
-                  note={
-                    item.result === "correct"
-                      ? "correct!"
-                      : item.result === "low"
-                        ? "too low"
-                        : "too high"
-                  }
-                />
-              )}
-            />
+            {/* Guess Log History */}
+            <View style={styles.listContainer}>
+              <Text style={styles.historyHeader}>GUESS LOG</Text>
+              <FlatList
+                data={history}
+                keyExtractor={(item, i) => `${item.value}-${i}`}
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item, index }) => (
+                  <GuessLogItem
+                    roundNumber={history.length - index}
+                    guess={item.value}
+                    note={
+                      item.result === "correct"
+                        ? "correct!"
+                        : item.result === "low"
+                          ? "too low"
+                          : "too high"
+                    }
+                  />
+                )}
+              />
+            </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
 
         {/* Smart Hints Modal */}
         <SmartHintModal
@@ -508,13 +516,16 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 52,
-    fontSize: 32,
-    borderBottomWidth: 2,
-    borderBottomColor: "#00E5FF",
+    fontSize: 28,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: "#00E5FF",
     color: "#00E5FF",
     fontFamily: FontFamily.display,
     textAlign: "center",
     marginBottom: 12,
+    paddingHorizontal: 16,
   },
   actionsRow: {
     flexDirection: "row",

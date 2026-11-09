@@ -1321,10 +1321,13 @@ const styles = StyleSheet.create({
   /* Performance Telemetry Grid */
   telemetryGrid: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 10,
   },
   telemetryTile: {
     flex: 1,
+    flexBasis: "47%",
+    minWidth: 130,
     backgroundColor: Colors.surface,
     borderRadius: Radius.md,
     paddingVertical: 12,

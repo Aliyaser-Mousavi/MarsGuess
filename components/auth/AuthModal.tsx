@@ -7,7 +7,9 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -183,7 +185,12 @@ export default function AuthModal({
     >
       <View style={styles.overlay}>
         <SafeAreaView style={styles.safe}>
-          <View style={styles.modalBox}>
+          <KeyboardAvoidingView
+            style={{ flex: 1, justifyContent: "center" }}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0}
+          >
+            <View style={styles.modalBox}>
             {/* Header */}
             <View style={styles.headerRow}>
               <View style={styles.titleIconRow}>
@@ -448,6 +455,7 @@ export default function AuthModal({
               ) : null}
             </ScrollView>
           </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </View>
     </Modal>
@@ -585,10 +593,11 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: Colors.bgElevated,
     borderRadius: Radius.md,
-    borderWidth: 1,
-    borderColor: Colors.border,
+    borderWidth: 1.5,
+    borderColor: Colors.borderStrong,
     paddingHorizontal: 14,
     paddingVertical: 12,
+    minHeight: 48,
     color: Colors.text,
     fontFamily: FontFamily.sansMedium,
     fontSize: 14,

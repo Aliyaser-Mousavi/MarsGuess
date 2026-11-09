@@ -28,7 +28,9 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -636,7 +638,10 @@ export default function NumberAcademyScreen({ onBack }: Props) {
 
         {/* INTERACTIVE LESSON / SANDBOX MODAL */}
         <Modal visible={isModalOpen} animationType="slide" transparent>
-          <View style={styles.modalBackdrop}>
+          <KeyboardAvoidingView
+            style={styles.modalBackdrop}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+          >
             <Card style={styles.sandboxModal}>
               <View style={styles.sandboxHeader}>
                 <Text style={styles.sandboxTitle}>
@@ -698,6 +703,7 @@ export default function NumberAcademyScreen({ onBack }: Props) {
                     onChangeText={setInputVal}
                   />
                   <PrimaryButton
+                    fullWidth={false}
                     onPress={handleSubmitSandboxGuess}
                     variant="primary"
                     disabled={!inputVal.trim()}
@@ -799,7 +805,7 @@ export default function NumberAcademyScreen({ onBack }: Props) {
                 ))}
               </ScrollView>
             </Card>
-          </View>
+          </KeyboardAvoidingView>
         </Modal>
       </SafeAreaView>
     </ScreenBackground>
@@ -1232,8 +1238,10 @@ const styles = StyleSheet.create({
   sandboxInput: {
     flex: 1,
     height: 48,
-    backgroundColor: "rgba(255,255,255,0.06)",
-    borderRadius: Radius.sm,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
     paddingHorizontal: 16,
     color: Colors.text,
     fontFamily: FontFamily.display,

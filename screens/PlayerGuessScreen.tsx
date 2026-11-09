@@ -31,7 +31,9 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -383,8 +385,13 @@ export default function PlayerGuessScreen({
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safe}>
-        <View style={styles.screen}>
-          {/* Top HUD with Pause Button */}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        >
+          <View style={styles.screen}>
+            {/* Top HUD with Pause Button */}
           <View style={styles.hud}>
             <Pressable
               onPress={() => {
@@ -475,6 +482,7 @@ export default function PlayerGuessScreen({
             <View style={styles.actionsRow}>
               <View style={{ flex: 1.6 }}>
                 <PrimaryButton
+                  fullWidth={false}
                   variant="accent"
                   onPress={submitGuess}
                   disabled={isPaused || isGameOver || isConnecting}
@@ -486,6 +494,7 @@ export default function PlayerGuessScreen({
               {hintsLeft > 0 && (
                 <View style={{ flex: 1 }}>
                   <PrimaryButton
+                    fullWidth={false}
                     variant="ghost"
                     onPress={() => {
                       buzz("light");
@@ -535,6 +544,7 @@ export default function PlayerGuessScreen({
             />
           </View>
         </View>
+        </KeyboardAvoidingView>
 
         {/* Smart Hints Modal */}
         <SmartHintModal
@@ -660,13 +670,16 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 52,
-    fontSize: 32,
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.accent,
+    fontSize: 28,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.accent,
     color: Colors.accent,
     fontFamily: "SpaceGrotesk-Bold",
     textAlign: "center",
     marginBottom: 12,
+    paddingHorizontal: 16,
   },
   actionsRow: {
     flexDirection: "row",

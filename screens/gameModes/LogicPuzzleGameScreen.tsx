@@ -16,6 +16,8 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import {
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -203,8 +205,13 @@ export default function LogicPuzzleGameScreen({
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safe}>
-        <View style={styles.screen}>
-          {/* Top HUD with Pause Button */}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        >
+          <View style={styles.screen}>
+            {/* Top HUD with Pause Button */}
           <View style={styles.hud}>
             <Pressable
               onPress={() => {
@@ -328,6 +335,7 @@ export default function LogicPuzzleGameScreen({
             </PrimaryButton>
           </Card>
         </View>
+        </KeyboardAvoidingView>
 
         {/* Anti-Cheat Pause Modal */}
         <PauseModal
@@ -448,14 +456,17 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   input: {
-    width: 120,
-    height: 48,
-    fontSize: 32,
-    borderBottomWidth: 2,
-    borderBottomColor: "#9C88FF",
+    width: 140,
+    height: 52,
+    fontSize: 28,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: "#9C88FF",
     color: "#9C88FF",
     fontFamily: FontFamily.display,
     textAlign: "center",
-    marginBottom: 12,
+    marginBottom: 14,
+    paddingHorizontal: 12,
   },
 });

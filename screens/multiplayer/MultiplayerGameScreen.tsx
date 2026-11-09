@@ -24,7 +24,9 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Alert,
   FlatList,
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -213,7 +215,12 @@ export default function MultiplayerGameScreen({
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safeArea}>
-        {/* Top Header */}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        >
+          {/* Top Header */}
         <View style={styles.header}>
           <Pressable
             style={styles.forfeitBtn}
@@ -365,6 +372,7 @@ export default function MultiplayerGameScreen({
             />
           </View>
         </View>
+        </KeyboardAvoidingView>
 
         {/* Game Over Modal / Result Banner */}
         <Modal visible={gameOver} transparent animationType="fade">
@@ -433,6 +441,7 @@ export default function MultiplayerGameScreen({
               </Text>
               <View style={styles.confirmBtns}>
                 <PrimaryButton
+                  fullWidth={false}
                   onPress={() => setShowForfeitModal(false)}
                   variant="secondary"
                   style={styles.halfBtn}
@@ -440,6 +449,7 @@ export default function MultiplayerGameScreen({
                   CANCEL
                 </PrimaryButton>
                 <PrimaryButton
+                  fullWidth={false}
                   onPress={handleForfeit}
                   variant="danger"
                   style={styles.halfBtn}
@@ -610,14 +620,17 @@ const styles = StyleSheet.create({
   },
   numberInput: {
     width: "100%",
-    height: 64,
-    backgroundColor: "rgba(255,255,255,0.06)",
+    height: 54,
     borderRadius: Radius.md,
-    color: Colors.text,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.primary,
+    color: Colors.primary,
     fontFamily: FontFamily.display,
-    fontSize: 32,
+    fontSize: 28,
     textAlign: "center",
     marginBottom: 12,
+    paddingHorizontal: 16,
   },
   submitBtn: {
     width: "100%",

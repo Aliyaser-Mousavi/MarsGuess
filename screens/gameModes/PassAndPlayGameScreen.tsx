@@ -14,6 +14,8 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useRef, useState } from "react";
 import {
   FlatList,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -207,8 +209,13 @@ export default function PassAndPlayGameScreen({
   return (
     <ScreenBackground>
       <SafeAreaView style={styles.safe}>
-        <View style={styles.screen}>
-          {/* Header */}
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : undefined}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 12 : 0}
+        >
+          <View style={styles.screen}>
+            {/* Header */}
           <View style={styles.headerRow}>
             <Title size="md">Pass & Play</Title>
             <Text style={styles.subtext}>
@@ -469,6 +476,7 @@ export default function PassAndPlayGameScreen({
             </Card>
           )}
         </View>
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </ScreenBackground>
   );
@@ -519,6 +527,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     marginTop: 24,
+    width: "100%",
   },
   phaseHeader: {
     fontFamily: FontFamily.bodyBold,
@@ -529,13 +538,16 @@ const styles = StyleSheet.create({
   },
   secretInput: {
     width: "100%",
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.accent,
+    height: 58,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.accent,
     color: Colors.accent,
     fontFamily: FontFamily.display,
-    fontSize: 44,
+    fontSize: 36,
     textAlign: "center",
-    paddingVertical: 10,
+    paddingHorizontal: 16,
     marginVertical: 18,
     fontVariant: ["tabular-nums"],
   },
@@ -559,17 +571,21 @@ const styles = StyleSheet.create({
     padding: 14,
     marginVertical: 6,
     alignItems: "center",
+    width: "100%",
   },
   input: {
     width: "100%",
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.accent,
+    height: 52,
+    borderRadius: Radius.md,
+    backgroundColor: Colors.bgElevated,
+    borderWidth: 1.5,
+    borderColor: Colors.accent,
     color: Colors.accent,
     fontFamily: FontFamily.display,
-    fontSize: 32,
+    fontSize: 28,
     textAlign: "center",
-    paddingVertical: 6,
-    marginBottom: 10,
+    paddingHorizontal: 16,
+    marginBottom: 12,
     fontVariant: ["tabular-nums"],
   },
   listContainer: {

@@ -10,7 +10,9 @@ import { EXPANDED_ACHIEVEMENTS } from "@/services/achievements/AchievementServic
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -103,7 +105,11 @@ export default function EditProfileModal({ visible, onClose }: Props) {
     >
       <View style={styles.overlay}>
         <SafeAreaView style={styles.safe}>
-          <View style={styles.sheet}>
+          <KeyboardAvoidingView
+            style={{ flex: 1, justifyContent: "flex-end" }}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+          >
+            <View style={styles.sheet}>
             {/* Header */}
             <View style={styles.sheetHeader}>
               <Text style={styles.sheetTitle}>Edit Profile</Text>
@@ -270,6 +276,7 @@ export default function EditProfileModal({ visible, onClose }: Props) {
               <View style={styles.buttonRow}>
                 <View style={{ flex: 1 }}>
                   <PrimaryButton
+                    fullWidth={false}
                     variant="secondary"
                     size="md"
                     onPress={onClose}
@@ -279,6 +286,7 @@ export default function EditProfileModal({ visible, onClose }: Props) {
                 </View>
                 <View style={{ flex: 1 }}>
                   <PrimaryButton
+                    fullWidth={false}
                     variant="accent"
                     size="md"
                     onPress={handleSave}
@@ -289,6 +297,7 @@ export default function EditProfileModal({ visible, onClose }: Props) {
               </View>
             </ScrollView>
           </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </View>
     </Modal>
@@ -355,10 +364,11 @@ const styles = StyleSheet.create({
   textInput: {
     backgroundColor: Colors.bgElevated,
     borderRadius: Radius.md,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: Colors.borderStrong,
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
     paddingVertical: 12,
+    minHeight: 48,
     color: Colors.text,
     fontFamily: FontFamily.sansMedium,
     fontSize: 15,

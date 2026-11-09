@@ -279,6 +279,7 @@ export default function InteractiveTutorialModal({
           <View style={styles.controlsRow}>
             {currentStep > 0 ? (
               <PrimaryButton
+                fullWidth={false}
                 variant="secondary"
                 size="md"
                 onPress={handlePrev}
@@ -289,6 +290,7 @@ export default function InteractiveTutorialModal({
             ) : null}
 
             <PrimaryButton
+              fullWidth={false}
               variant="accent"
               size="md"
               onPress={handleNext}
